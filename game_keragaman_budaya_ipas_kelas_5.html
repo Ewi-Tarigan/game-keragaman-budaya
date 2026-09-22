@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jelajah Keragaman Budaya Indonesia - IPAS Kelas V</title>
+<style>
+body{font-family:Arial,sans-serif;background:#eef7ff;margin:0;padding:20px;color:#173f7a}
+.wrap{max-width:760px;margin:auto}.box{background:white;border-radius:20px;padding:24px;box-shadow:0 4px 18px #0001;text-align:center}
+h1{font-size:32px;margin:8px 0}.sub{color:#555}.badge{display:inline-block;background:#fff0a8;padding:7px 12px;border-radius:20px;font-weight:bold}
+button{border:0;border-radius:12px;padding:13px 18px;font-weight:bold;font-size:16px;cursor:pointer}
+.start,.next{background:#173f7a;color:white}.option{display:block;width:100%;text-align:left;margin:10px 0;background:#f5f8fc;border:2px solid #dce5ef;color:#222}.correct{background:#d9f7df!important;border-color:#24a148!important}.wrong{background:#ffe0e0!important;border-color:#d33!important}
+.progress{height:10px;background:#e5e7eb;border-radius:10px;margin:18px 0;overflow:hidden}.bar{height:100%;background:#f4c542;width:5%}
+.hidden{display:none}.q{font-size:21px;font-weight:bold;text-align:left;line-height:1.4}.score{font-size:48px;font-weight:bold}.small{color:#666}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section id="intro" class="box">
+<span class="badge">IPAS • Kelas V</span>
+<h1>Jelajah Keragaman Budaya Indonesia</h1>
+<h2>SDN 040457 Kejora</h2>
+<p class="sub">Materi: Keragaman Budaya Bangsa di Wilayah Indonesia</p>
+<p class="small">20 soal pilihan ganda • Skor otomatis</p>
+<button class="start" id="start">▶ Mulai Permainan</button>
+</section>
+<section id="quiz" class="box hidden">
+<div style="display:flex;justify-content:space-between;gap:10px"><b id="counter"></b><b id="score"></b></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="q" id="question"></div>
+<div id="options"></div>
+<button class="next hidden" id="next">Soal Berikutnya →</button>
+</section>
+<section id="result" class="box hidden">
+<span class="badge">Permainan Selesai 🎉</span>
+<h1>Hasil Permainan</h1>
+<div class="score" id="final"></div>
+<h2 id="message"></h2>
+<p id="detail"></p>
+<button class="start" id="again">↻ Main Lagi</button>
+</section>
+</div>
+<script>
+const data=[
+["Apa yang dimaksud dengan keragaman budaya?",["Keberagaman budaya yang dimiliki masyarakat","Kesamaan semua budaya di Indonesia","Hanya perbedaan bahasa","Hanya perbedaan makanan"],0],
+["Indonesia memiliki keragaman budaya antara lain karena memiliki banyak...",["Suku bangsa dan daerah","Musim salju","Bahasa asing saja","Negara bagian"],0],
+["Manakah yang termasuk contoh keragaman budaya Indonesia?",["Rumah adat, pakaian adat, dan tarian tradisional","Gedung pencakar langit","Jalan raya","Lampu lalu lintas"],0],
+["Keragaman budaya Indonesia berasal dari berbagai kebudayaan yang terus tumbuh dan berkembang di...",["Masyarakat lokal","Negara lain saja","Perusahaan","Bandara"],0],
+["Salah satu manfaat melestarikan budaya daerah adalah...",["Menjaga warisan budaya untuk generasi berikutnya","Menghilangkan budaya daerah","Membuat semua daerah sama","Melupakan tradisi"],0],
+["Apa yang dimaksud dengan upacara adat?",["Tradisi yang dilakukan masyarakat berdasarkan adat daerah","Perlombaan olahraga","Kegiatan perdagangan","Pertunjukan modern"],0],
+["Upacara adat umumnya diwariskan secara...",["Turun-temurun","Mendadak","Acak","Rahasia"],0],
+["Mengapa upacara adat perlu dilestarikan?",["Karena memiliki nilai budaya dan filosofis","Agar semua daerah memiliki adat yang sama","Karena hanya untuk wisatawan","Karena merupakan budaya modern"],0],
+["Pakaian adat merupakan salah satu ciri khas...",["Suku atau daerah tertentu","Jalan raya","Sekolah","Teknologi"],0],
+["Pakaian adat sering digunakan ketika berlangsung...",["Upacara atau kegiatan adat","Perbaikan jalan","Ujian matematika","Pertandingan sepak bola"],0],
+["Setiap daerah dapat memiliki pakaian adat yang berbeda dalam hal...",["Warna, corak, dan bentuk","Ukuran jalan","Jenis kendaraan","Cuaca saja"],0],
+["Rumah adat adalah...",["Bangunan tradisional yang menjadi ciri khas suatu daerah atau suku","Rumah modern di perkotaan","Gedung perkantoran","Tempat parkir"],0],
+["Rumah adat dapat digunakan sebagai tempat tinggal dan juga dapat digunakan untuk...",["Kegiatan atau upacara adat","Balapan kendaraan","Pabrik","Bandara"],0],
+["Rumah adat setiap daerah memiliki...",["Nama dan karakteristik masing-masing","Bentuk yang selalu sama","Warna yang wajib sama","Ukuran yang sama persis"],0],
+["Alat musik tradisional merupakan alat musik yang...",["Diwariskan dari generasi ke generasi","Selalu dibuat di luar negeri","Hanya digunakan dalam musik modern","Tidak memiliki hubungan dengan budaya"],0],
+["Alat musik tradisional berkembang di...",["Daerah-daerah tertentu","Satu negara saja tanpa daerah","Pabrik kendaraan","Bandara"],0],
+["Manakah yang termasuk contoh alat musik tradisional Indonesia?",["Angklung","Gitar listrik modern","Keyboard komputer","Speaker bluetooth"],0],
+["Sikap yang tepat terhadap keragaman budaya Indonesia adalah...",["Menghargai dan melestarikannya","Mengejek budaya lain","Menganggap budaya sendiri paling tinggi","Mengabaikan semua tradisi"],0],
+["Keragaman budaya dapat menjadi...",["Kebanggaan bangsa Indonesia","Alasan untuk bermusuhan","Penghalang persatuan","Sesuatu yang harus dihilangkan"],0],
+["Sebagai siswa, salah satu cara ikut melestarikan budaya Indonesia adalah...",["Mempelajari dan menghargai budaya daerah","Melupakan budaya daerah","Mengejek pakaian adat","Menolak semua tradisi"],0]
+];
+let i=0,score=0,answered=false;
+const $=id=>document.getElementById(id);
+function show(){
+ answered=false;$("next").classList.add("hidden");
+ $("counter").textContent=`Soal ${i+1} dari ${data.length}`;$("score").textContent=`Skor: ${score}`;
+ $("bar").style.width=((i+1)/data.length*100)+"%";$("question").textContent=data[i][0];$("options").innerHTML="";
+ data[i][1].forEach((v,n)=>{let b=document.createElement("button");b.className="option";b.textContent=String.fromCharCode(65+n)+". "+v;b.onclick=()=>answer(n,b);$("options").appendChild(b)});
+}
+function answer(n,b){
+ if(answered)return;answered=true;let c=data[i][2];
+ document.querySelectorAll(".option").forEach((x,k)=>{x.disabled=true;if(k===c)x.classList.add("correct")});
+ if(n===c)score++;else b.classList.add("wrong");$("score").textContent=`Skor: ${score}`;$("next").classList.remove("hidden");
+}
+$("start").onclick=()=>{$("intro").classList.add("hidden");$("quiz").classList.remove("hidden");i=0;score=0;show()};
+$("next").onclick=()=>{i++;if(i<data.length)show();else finish()};
+function finish(){
+ $("quiz").classList.add("hidden");$("result").classList.remove("hidden");$("final").textContent=`${score} / ${data.length}`;
+ let p=score/data.length*100;
+ $("message").textContent=p>=90?"Luar biasa! 🇮🇩":p>=75?"Hebat! 🌟":p>=60?"Bagus! Terus belajar! 📚":"Ayo belajar lagi! 💪";
+ $("detail").textContent=`Nilai: ${Math.round(p)}`;
+}
+$("again").onclick=()=>{$("result").classList.add("hidden");$("intro").classList.remove("hidden")};
+</script>
+</body>
+</html>
